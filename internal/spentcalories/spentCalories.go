@@ -19,15 +19,15 @@ const (
 func parseTraining(data string) (int, string, time.Duration, error) {
 	s := strings.Split(data, ",")
 	if len(s) != 3 {
-		return 0, "", 0, fmt.Errorf("слайс не равен 3")
+		return 0, "", 0, fmt.Errorf("slice isn`t equal to three")
 	}
 	steps, err := strconv.Atoi(s[0])
 	if err != nil {
-		return 0, "", 0, fmt.Errorf("преобразования в число %v", err)
+		return 0, "", 0, fmt.Errorf("conversion to number %v", err)
 	}
 	duration, err := time.ParseDuration(s[2])
 	if err != nil {
-		return 0, "", 0, fmt.Errorf("данные о продолжительости отсутствуют %v", err)
+		return 0, "", 0, fmt.Errorf("no duration data avalible %v", err)
 	}
 	activity := s[1]
 
@@ -51,7 +51,7 @@ func meanSpeed(steps int, duration time.Duration) float64 {
 func TrainingInfo(data string, weight, height float64) string {
 	steps, activity, duration, err := parseTraining(data)
 	if err != nil {
-		return fmt.Sprintf("Ошибка: %v", err)
+		return fmt.Sprintf("Error: %v", err)
 	}
 	var calories float64
 
@@ -66,7 +66,7 @@ func TrainingInfo(data string, weight, height float64) string {
 	distance := distance(steps)
 	meanSpeed := meanSpeed(steps, duration)
 
-	return fmt.Sprintf("Тип активности: %s\nДистанция: %.2f км\nСредняя скорость: %.2f км/ч\nСожжено калорий: %.2f\n", activity, distance, meanSpeed, calories)
+	return fmt.Sprintf("Тип активности: %s\nДлительность: %.2f ч.\nДистанция: %.2f км\nСредняя скорость: %.2f км/ч\nСожжено калорий: %.2f\n", activity, duration.Hours(), distance, meanSpeed, calories)
 }
 
 // Константы для расчета калорий, расходуемых при беге.
